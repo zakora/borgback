@@ -1,0 +1,10 @@
+[Unit]
+Description=Borgback pruning
+
+[Service]
+Type=simple
+RestartSec=5m
+Restart=on-failure
+Environment="BORG_REPO=PUT-THE-FULL-REPOSITORY-PATH-HERE"
+ExecStart=PATH-TO-BORG prune ${BORG_REPO} --prefix '{hostname}-' \
+        --keep-daily=15 --keep-weekly=10 --keep-monthly=5

@@ -1,0 +1,10 @@
+[Unit]
+Description=Prune borg backups
+
+[Timer]
+OnCalendar=Sunday 12:00
+AccuracySec=1m
+Persistent=true
+
+[Install]
+WantedBy=timers.target

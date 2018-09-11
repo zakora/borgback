@@ -1,0 +1,79 @@
+= borgback
+
+*borgback* is a Linux software that performs efficient and scheduled backups.
+It relies on https://www.borgbackup.org/[Borg] for the backup efficiency. On
+top of that it adds the following functionalities:
+
+* use of a configuration file to easily specify the backup repository, exclude
+  folders, etc.
+* schedule backups
+* schedule pruning of old backups
+
+== Getting started
+
+=== Requirements
+
+Make sure you have the following dependencies installed:
+
+* Python >= 3.5
+* borg, on both the host and the remote
+* libnotify (for notify-send)
+* systemd, as borgback relies on it to run as a service
+
+=== Installation
+
+You can install borgback using pip:
+
+ pip install borgback
+
+=== Setup
+
+==== Create the configuration file.
+
+*borgback* loads its configuration from `$XDG_CONFIG_HOME/borgback.toml`, this
+is usually `$HOME/.config/borgback.toml`.
+
+A sample configuration file is given in this repository in
+link:samples/borgback.toml[`samples/borgback.toml`].
+
+Edit this file and tailor it to your need (set the backup interval, the remote
+repository location, etc.)
+
+==== Create the systemd service for periodic backup.
+
+In order for *borgback* to start automically at startup:
+
+1. Create the systemd unit file `borgback.service`, a sample file is provided at
+link:samples/borgback.service[`samples/borgback.service`].
+This file can be placed at `$HOME/.config/systemd/user/borgback.service`
++
+Edit this file by setting the correct path to `borgback` on the line starting
+with `ExecStart=`.
+
+2. Enable and start the service with systemd, for example:
+
+ systemctl --user enable borgback.service
+ systemctl --user start borgback.service
+
+==== Create the systemd service and timer for periodic backup pruning.
+
+In order for *Borg* to automatically delete old backups, you should create
+another systemd service.
+
+1. Create the `borg-prune.service` from the link:samples/borg-prune.service[`borg-prune.service`] sample.
++
+Edit this file to set the correct path to Borg, as well as the backup repository
+and how much backups you want to keep.
+
+2. Enable and start this service
+
+ systemctl --user enable borg-prune.service
+ systemctl --user start borg-prune.service
+
+3. Create the `borg-prune.timer` from the link:samples/borg-prune.timer[`borg-prune.timer`] sample.
++
+Edit this file to set when to check for backup pruning.
+
+4. Enable the timer
+
+ systemctl --user enable borg-prune.timer

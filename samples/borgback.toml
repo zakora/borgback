@@ -1,0 +1,24 @@
+# This is a TOML document.
+# Check syntax at https://github.com/toml-lang/toml
+# More information on borg path specification at https://borgbackup.readthedocs.io/en/stable/quickstart.html
+
+[schedule]
+backup_interval = 1440  # integer, in minutes. Set the interval between backups.
+retry_interval = 15     # integer, in minutes. Set how long to wait before retrying to backup.
+
+[borg]
+local_path = "/usr/bin/borg"         # Full path to borg on the local machine to backup.
+repository = "HOST:REPOSITORY_PATH"  # Host and repository, where the backup will go.
+
+[backup]
+name = "{hostname}-HOME-{now:%Y-%m-%d}"  # Name of the backup.
+directories = [ "/home/YOUR_NAME", "ANOTHER_DIRECTORY" ]  # List of directories to backup.
+
+# List of directories or patterns to exclude from backup.
+exclude = [
+    # Full paths
+    "/home/YOUR_NAME/.cache/",
+
+    # Patterns
+    "node_modules/",
+]

@@ -1,0 +1,11 @@
+[Unit]
+Description=Borgback scheduled backup
+
+[Service]
+Type=simple
+Restart=on-failure
+RestartSec=1min
+ExecStart=PATH-TO-BORGBACK --debug
+
+[Install]
+WantedBy=default.target
