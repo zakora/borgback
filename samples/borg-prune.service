@@ -1,5 +1,6 @@
 [Unit]
 Description=Borgback pruning
+Wants=network-online.target
 
 [Service]
 Type=simple
