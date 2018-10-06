@@ -2,7 +2,7 @@ from setuptools import find_packages, setup
 
 setup(
     name='borgback',
-    version='0.1',
+    version='0.2',
     description='Scheduled backups using Borg',
     author='zakora',
     classifiers=[
