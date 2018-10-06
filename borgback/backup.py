@@ -74,7 +74,7 @@ def last_backup(conf):
         raise err
 
     else:
-        last = loads(last.stdout)
+        last = loads(last.stdout.decode('utf-8'))
         time = last['archives'][-1]['time']
         return parse(time)
 
@@ -109,7 +109,7 @@ def schedule():
     backup_interval = conf["schedule"]["backup_interval"]
     retry_interval = conf["schedule"]["retry_interval"]
 
-    # Check if a backup if needed now, otherwise wait until it is time to do so.
+    # Check if a backup is needed now, otherwise wait until it is time to do so.
     retry_in = retry_interval
     try:
         delta = datetime.now() - last_backup(conf)
