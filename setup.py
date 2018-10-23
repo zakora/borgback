@@ -2,11 +2,11 @@ from setuptools import find_packages, setup
 
 setup(
     name='borgback',
-    version='0.2',
+    version='1.0',
     description='Scheduled backups using Borg',
     author='zakora',
     classifiers=[
-        'Development Status :: 4 - Beta',
+        'Development Status :: 5 - Production/Stable',
         'Environment :: No Input/Output (Daemon)',
         'Intended Audience :: End Users/Desktop',
         'Intended Audience :: System Administrators',
